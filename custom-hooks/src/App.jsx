@@ -1,9 +1,11 @@
 import React from 'react'
 import useLocalStorage from './useLocalStorage';
+import useFetch from './useFetch';
 
 function App() {
   const[produto, setProduto] = useLocalStorage('produto', '');
-
+  const {request, data} = useFetch();
+  
   function handleClick({target}) {
     setProduto(target.innerText);
   }
