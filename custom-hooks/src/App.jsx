@@ -4,16 +4,22 @@ import useFetch from './useFetch';
 
 function App() {
   const[produto, setProduto] = useLocalStorage('produto', '');
-  const {request, data, loading} = useFetch();
+  const {request, data, loading, error} = useFetch();
   
   function handleClick({target}) {
     setProduto(target.innerText);
   }
 
   React.useEffect(() => {
-    request('https://ranekapi.origamid.dev/json/api/produto/')
-  }, []);
+    async function fetchData() {
+      const {response, json} = await request('https://ranekapi.origamid.dev/json/api/produto/');
+    
+      console.log(response, json)
+    }
+    fetchData();
+  }, [request]);
    
+  if (error) return error;
   if (loading) return <p>Carregando...</p>
   if (data)
     return (
